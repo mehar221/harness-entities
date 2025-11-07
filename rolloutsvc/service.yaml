@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: python-app-service
   labels:
-    app: python-app
+    app: python-app-new
 spec:
   type: LoadBalancer
   selector:
