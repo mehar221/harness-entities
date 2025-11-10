@@ -1,0 +1,19 @@
+apiVersion: harness.io/v1
+kind: Component
+type: service
+identifier: harnessguestbook
+name: harness_guestbook
+owner: Unknown
+orgIdentifier: default
+projectIdentifier: Manisha
+spec:
+  lifecycle: Unknown
+  harnessService:
+    identifier: harnessguestbook
+    orgIdentifier: default
+    projectIdentifier: Manisha
+metadata:
+  annotations:
+    backstage.io/techdocs-ref: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/code/repos/IDP-Repo/files/IDP/~/harness_guestbook/docs/index.md
+    harness.io/services: |
+      harnessguestbook: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/cd/orgs/default/projects/Manisha/services/harnessguestbook
