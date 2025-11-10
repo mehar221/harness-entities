@@ -14,6 +14,6 @@ spec:
     projectIdentifier: Manisha
 metadata:
   annotations:
-    backstage.io/techdocs-ref: 'url:https://github.com/mehar221/harness-entities/blob/main/rolloutsvc/IDP/docs/readme.md'
+    backstage.io/techdocs-ref: 'url:https://github.com/mehar221/harness-entities/blob/main/rolloutsvc/IDP/docs'
     harness.io/services: |
       harnessguestbook: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/cd/orgs/default/projects/Manisha/services/harnessguestbook
