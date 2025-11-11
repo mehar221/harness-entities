@@ -1,0 +1,22 @@
+apiVersion: harness.io/v1
+kind: Component
+name: sampleservicetest
+identifier: sampleservicetest
+type: service
+owner: my-sample-team
+spec:
+  lifecycle: experimental
+metadata:
+  description: My Sample service.
+  annotations:
+    harness.io/pipelines: |
+      CI: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/cd/orgs/default/projects/Manisha/pipelines/Testcipipeline/pipeline-studio/?storeType=REMOTE&connectorRef=org.GithubconnectorCodeRepo&repoName=harness-docs&branch=main
+      CD: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/cd/orgs/default/projects/Manisha/pipelines/deploy/pipeline-studio/?storeType=INLINE
+    harness.io/services: |
+      rolloutsvc: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/cd/orgs/default/projects/Manisha/services/rolloutsvc?tab=summaryTab&storeType=REMOTE&connectorRef=githubconnector&repoName=harness-docs&branch=main
+      rolloutsvc_Clone: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/cd/orgs/default/projects/Manisha/services/rolloutsvc_Clone?tab=summaryTab&searchTerm=&myDeployments=false&timeRange%5BtimeRangeFilterType%5D=LAST_30_DAYS&applicationName=&serviceIdentifiers%5B0%5D=rolloutsvc_Clone
+  links:
+    - title: Website
+      url: https://www.apple.com/
+  tags:
+    - my-sample
