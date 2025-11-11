@@ -2,6 +2,7 @@ apiVersion: harness.io/v1
 kind: Component
 metadata:
   name: docscheck
+  identifier: docscheck
   description: To check TechDocs working or not
   tags:
     - java
