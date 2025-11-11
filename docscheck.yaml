@@ -1,0 +1,21 @@
+apiVersion: harness.io/v1
+kind: component
+name: docscheck
+identifier: docscheck
+type: service
+owner: user:account/manisha.choudhary@harness.io
+scope: PROJECT
+projectIdentifier: Manisha
+orgIdentifier: default
+spec:
+  lifecycle: production
+  sourceCode:
+    provider: Github
+    repoName: harness-entities
+    connectorRef: account.Freshgithubconnector
+    branch: main
+    monoRepo: false
+metadata:
+  tags:
+    - java
+  description: to check techdocs working or not
