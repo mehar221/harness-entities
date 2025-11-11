@@ -1,0 +1,14 @@
+site_name: DocsCheck Service Documentation
+site_description: Documentation for the DocsCheck service component in Harness IDP.
+site_author: Harness IDP
+repo_url: https://github.com/mehar221/harness-entities
+edit_uri: edit/main/.harness/docs/
+
+# Docs navigation structure
+nav:
+  - Home: index.md
+
+# Plugins required by TechDocs (Do not remove)
+plugins:
+  - techdocs-core
+
