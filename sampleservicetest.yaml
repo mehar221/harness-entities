@@ -9,6 +9,7 @@ spec:
 metadata:
   description: My Sample service.
   annotations:
+    backstage.io/techdocs-ref: dir:.
     harness.io/pipelines: |
       CI: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/cd/orgs/default/projects/Manisha/pipelines/Testcipipeline/pipeline-studio/?storeType=REMOTE&connectorRef=org.GithubconnectorCodeRepo&repoName=harness-docs&branch=main
       CD: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/cd/orgs/default/projects/Manisha/pipelines/deploy/pipeline-studio/?storeType=INLINE
