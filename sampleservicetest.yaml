@@ -4,8 +4,15 @@ name: sampleservicetest
 identifier: sampleservicetest
 type: service
 owner: my-sample-team
+scope: ACCOUNT
 spec:
   lifecycle: experimental
+  sourceCode:
+    provider: Github
+    repoName: harness-entities
+    connectorRef: account.Freshgithubconnector
+    branch: main
+    monoRepo: false
 metadata:
   description: My Sample service.
   annotations:
