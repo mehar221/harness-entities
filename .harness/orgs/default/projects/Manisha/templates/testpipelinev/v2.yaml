@@ -29,6 +29,7 @@ template:
                             echo "hellp"
                             echo "test"
                             echo "edirt"
+                            echo "testtt"
                       environmentVariables: []
                       outputVariables: []
                     timeout: 10m
