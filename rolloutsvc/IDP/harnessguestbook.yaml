@@ -13,7 +13,12 @@ spec:
     orgIdentifier: default
     projectIdentifier: Manisha
 metadata:
+  averageDeploymentDurationSeconds: 0
+  deploymentFrequencyPerSprint: 0
   annotations:
-    backstage.io/techdocs-ref: 'url:https://github.com/mehar221/harness-entities/blob/main/rolloutsvc/IDP/docs'
-    harness.io/services: |
+    backstage.io/techdocs-ref: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/module/code/repos/IDP-Repo/files/IDP/~/harness_guestbook/docs/index.md
+    harness.io/services:
+    - |
       harnessguestbook: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/cd/orgs/default/projects/Manisha/services/harnessguestbook
+    - 'harnessguestbook: https://app.harness.io/ng/account/qmrzY7joS9SsdtHPFP8WHQ/cd/orgs/default/projects/Manisha/services/harnessguestbook'
+  changeFailureRatePercent: 0
