@@ -1,0 +1,17 @@
+apiVersion: harness.io/v1
+kind: Component
+type: service
+identifier: Argo_CD_TEST_NEW
+name: Argo CD Test New
+owner: Unknown
+orgIdentifier: default
+projectIdentifier: Manisha
+spec:
+  lifecycle: Unknown
+metadata:
+  averageDeploymentDurationSeconds: 0
+  deploymentFrequencyPerSprint: 0
+  annotations:
+    argocd/app-selector: test=check
+    argocd/app-namespace: argocd
+  changeFailureRatePercent: 0
