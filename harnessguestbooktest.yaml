@@ -1,0 +1,11 @@
+apiVersion: harness.io/v1
+kind: Component
+type: service
+identifier: harnessguestbooktest
+name: harness_guestbook_test
+owner: Unknown
+orgIdentifier: default
+projectIdentifier: Manisha
+spec:
+  lifecycle: Unknown
+metadata: {}
