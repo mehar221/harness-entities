@@ -8,6 +8,13 @@ orgIdentifier: default
 projectIdentifier: Manisha
 spec:
   lifecycle: Unknown
+  sourceCode:
+    provider: Github
+    repoName: harness-entities
+    connectorRef: account.Freshgithubconnector
+    branch: main
+    monoRepo: false
+    url: https://github.com/mehar221/harness-entities/tree/main
   harnessService:
     identifier: harnessguestbook
     orgIdentifier: default
