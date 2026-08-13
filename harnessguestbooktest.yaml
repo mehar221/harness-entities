@@ -6,4 +6,10 @@ name: harness_guestbook_test
 owner: Unknown
 spec:
   lifecycle: Unknown
-metadata: {}
+  sourceCode:
+    provider: Github
+    repoName: harness-entities
+    connectorRef: account.Freshgithubconnector
+    branch: main
+    monoRepo: false
+    url: https://github.com/mehar221/harness-entities/tree/main
