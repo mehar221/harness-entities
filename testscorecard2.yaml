@@ -1,0 +1,24 @@
+apiVersion: harness.io/v1
+kind: Component
+type: service
+identifier: testscorecard2
+name: testscorecard2
+owner: user:account/manisha.choudhary@harness.io
+orgIdentifier: default
+projectIdentifier: Manisha
+spec:
+  lifecycle: production
+  sourceCode:
+    provider: Github
+    repoName: harness-entities
+    connectorRef: account.Freshgithubconnector
+    branch: main
+    monoRepo: false
+    url: https://github.com/mehar221/harness-entities/tree/main
+metadata:
+  annotations:
+    backstage.io/source-location: url:https://github.com/mehar221/harness-entities/tree/main
+  tags:
+  - java
+  - dev
+  - qa
