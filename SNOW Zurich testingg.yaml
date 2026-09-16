@@ -1,0 +1,108 @@
+pipeline:
+  name: SNOW Zurich testingg
+  identifier: SNOW_Zurich_testingg
+  projectIdentifier: Manisha
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: snow
+        identifier: snow
+        description: ""
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: HarnessApproval
+                  name: HarnessApproval_2
+                  identifier: HarnessApproval_2
+                  spec:
+                    approvalMessage: Please review theaadc following information and approve the pipeline progression
+                    includePipelineExecutionHistory: true
+                    isAutoRejectEnabled: false
+                    approvers:
+                      userGroups:
+                        - account.test
+                        - account._account_all_users
+                      minimumCount: 1
+                      disallowPipelineExecutor: false
+                    approverInputs: []
+                  timeout: 1d
+              - step:
+                  name: test-ticket
+                  identifier: testticket
+                  type: ServiceNowCreate
+                  timeout: 5m
+                  spec:
+                    connectorRef: SNOW_Zurich
+                    ticketType: change_request
+                    fields:
+                      - name: description
+                        value: test-manisha
+                      - name: short_description
+                        value: hello
+                    createType: Normal
+              - step:
+                  name: approval
+                  identifier: approval
+                  type: ServiceNowApproval
+                  timeout: 1d
+                  spec:
+                    approvalCriteria:
+                      type: KeyValues
+                      spec:
+                        matchAnyCondition: true
+                        conditions:
+                          - key: type
+                            operator: equals
+                            value: Normal
+                    rejectionCriteria:
+                      type: KeyValues
+                      spec:
+                        matchAnyCondition: true
+                        conditions: []
+                    connectorRef: SNOW_Zurich
+                    ticketNumber: <+pipeline.stages.snow.spec.execution.steps.testticket.ticket.ticketNumber>
+                    retryInterval: 1m
+                    ticketType: change_request
+              - step:
+                  name: update
+                  identifier: update
+                  type: ServiceNowUpdate
+                  timeout: 5m
+                  spec:
+                    useServiceNowTemplate: false
+                    connectorRef: SNOW_Zurich
+                    ticketType: change_request
+                    ticketNumber: <+pipeline.stages.snow.spec.execution.steps.testticket.ticket.ticketNumber>
+                    fields:
+                      - name: description
+                        value: test-new-description
+                      - name: short_description
+                        value: hello this is updation
+        tags: {}
+    - stage:
+        name: script
+        identifier: script
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    executionTarget: {}
+                    source:
+                      type: Inline
+                      spec:
+                        script: echo
+                    environmentVariables: []
+                    outputVariables: []
+                  timeout: 10m
+        tags: {}
+  allowStageExecutions: true
