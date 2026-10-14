@@ -1,0 +1,224 @@
+template:
+  name: test-cb-pipeline
+  type: Pipeline
+  projectIdentifier: Manisha
+  orgIdentifier: default
+  spec:
+    stages:
+      - stage:
+          name: deploy
+          identifier: deploy
+          description: ""
+          type: Deployment
+          spec:
+            deploymentType: Kubernetes
+            service:
+              serviceRef: manishasvc
+              serviceInputs:
+                serviceDefinition:
+                  type: Kubernetes
+                  spec:
+                    artifacts:
+                      primary:
+                        primaryArtifactRef: <+input>
+                        sources: <+input>
+            execution:
+              steps:
+                - step:
+                    type: Barrier
+                    name: Barrier_1
+                    identifier: Barrier_1
+                    spec:
+                      barrierRef: test
+                    timeout: 10m
+                - step:
+                    type: ShellScript
+                    name: ShellScript_1
+                    identifier: ShellScript_1
+                    spec:
+                      shell: Bash
+                      executionTarget: {}
+                      source:
+                        type: Inline
+                        spec:
+                          script: |-
+                            curl -i -X PUT \
+                              'https://app.harness.io/ng/api/variables?accountIdentifier=qmrzY7joS9SsdtHPFP8WHQ' \
+                              -H 'Content-Type: application/json' \
+                              -H 'x-api-key: pat.qmrzY7joS9SsdtHPFP8WHQ.67459df621a0842abb9a159e.ib7u3qHOw9VbCDqwDfqf' \
+                              -d '{
+                                "variable": {
+                                  "identifier": "var_one",
+                                  "name": "var_one",
+                                  "orgIdentifier": "default",
+                                  "projectIdentifier": "Manisha",
+                                  "type": "String",
+                                  "spec": {
+                                    "valueType": "FIXED",
+                                    fixedValue": "<+pipeline.stages.deploy.spec.execution.steps.ShellScript_1.output.outputVariables.inputone>"
+                                  }
+                                }
+                              }'
+                      environmentVariables: []
+                      outputVariables: []
+                    timeout: 10m
+                - step:
+                    type: ShellScript
+                    name: ShellScript_2
+                    identifier: ShellScript_2
+                    spec:
+                      shell: Bash
+                      executionTarget: {}
+                      source:
+                        type: Inline
+                        spec:
+                          script: |
+                            abc = <+pipeline.trigger.payload.pullRequest.lastCommit.message>
+                      environmentVariables: []
+                      outputVariables:
+                        - name: abc
+                          type: String
+                          value: abc
+                    timeout: 10m
+              rollbackSteps:
+                - step:
+                    name: Swap primary with stage service
+                    identifier: rollbackBgSwapServices
+                    type: K8sBGSwapServices
+                    timeout: 10m
+                    spec:
+                      skipDryRun: false
+            environments:
+              metadata:
+                parallel: false
+              values:
+                - environmentRef: harnessdevenv
+                  deployToAll: false
+                  infrastructureDefinitions:
+                    - identifier: <+pipeline.variables.infra>
+          tags: {}
+          failureStrategies:
+            - onFailure:
+                errors:
+                  - AllErrors
+                action:
+                  type: StageRollback
+      - stage:
+          name: Helm
+          identifier: Helm
+          description: ""
+          type: Deployment
+          spec:
+            deploymentType: NativeHelm
+            service:
+              serviceRef: HelmBlueGreen
+            environment:
+              environmentRef: harnessdevenv
+              deployToAll: false
+              infrastructureDefinitions:
+                - identifier: k8sinfra
+            execution:
+              steps:
+                - step:
+                    name: Stage Deployment
+                    identifier: stageDeployment
+                    type: HelmBGDeploy
+                    timeout: 10m
+                    spec:
+                      skipDryRun: false
+                      pruningEnabled: false
+                - step:
+                    name: Swap primary with stage service
+                    identifier: bgSwapServices
+                    type: HelmBlueGreenSwapStep
+                    timeout: 10m
+                    spec:
+                      skipDryRun: false
+              rollbackSteps:
+                - step:
+                    name: Swap primary with stage service
+                    identifier: rollbackBgSwapServices
+                    type: HelmBlueGreenSwapStep
+                    timeout: 10m
+                    spec:
+                      skipDryRun: false
+          tags: {}
+          failureStrategies:
+            - onFailure:
+                errors:
+                  - AllErrors
+                action:
+                  type: PipelineRollback
+      - stage:
+          name: test
+          identifier: test
+          description: ""
+          type: Custom
+          spec:
+            execution:
+              steps:
+                - step:
+                    type: ShellScript
+                    name: ShellScript_1
+                    identifier: ShellScript_1
+                    spec:
+                      shell: Bash
+                      executionTarget: {}
+                      source:
+                        type: Inline
+                        spec:
+                          script: |-
+                            hello=<+secrets.getValue("test-hcr")>
+                            echo hello
+                      environmentVariables: []
+                      outputVariables:
+                        - name: hello
+                          type: String
+                          value: hello
+                    timeout: 10m
+          tags: {}
+    notificationRules:
+      - name: not-1
+        identifier: not1
+        pipelineEvents:
+          - type: PipelineSuccess
+          - type: StageFailed
+            forStages:
+              - deploy
+          - type: StageSuccess
+            forStages:
+              - AllStages
+          - type: StageStart
+            forStages:
+              - AllStages
+        notificationMethod:
+          type: Email
+          spec:
+            userGroups: []
+            recipients:
+              - manisha.choudhary@harness.io
+        enabled: true
+        template:
+          versionLabel: v0
+          templateRef: email_template
+          orgIdentifier: default
+          projectIdentifier: Manisha
+    variables:
+      - name: inputone
+        type: String
+        description: ""
+        required: true
+        value: <+pipeline.executionId>
+      - name: infra
+        type: String
+        description: ""
+        required: false
+        value: <+variable.infra>
+      - name: test
+        type: String
+        description: ""
+        required: true
+        value: <+input>.selectOneFrom(hello,hi)
+    allowStageExecutions: true
+  identifier: testcbpipeline
+  versionLabel: "1.0"
