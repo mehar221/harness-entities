@@ -218,7 +218,7 @@ template:
         type: String
         description: ""
         required: true
-        value: <+input>.selectOneFrom(hello,hi)
+        value: <+input>.selectOneFrom(hello,hi,hey)
     allowStageExecutions: true
   identifier: testcbpipeline
   versionLabel: "1.0"
